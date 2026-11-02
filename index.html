@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KUSU 2025–2029 CBA Pay Estimator</title>
+<style>
+:root{--navy:#12304a;--blue:#176b87;--teal:#0b7a75;--bg:#f3f6f8;--ink:#203040;--muted:#64748b;--line:#dce4ea;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Arial,Helvetica,sans-serif}
+header{background:linear-gradient(120deg,#102b43,#176b87);color:#fff;padding:28px max(20px,calc((100% - 1180px)/2))}
+header h1{margin:0 0 5px;font-size:clamp(23px,4vw,32px)}header p{margin:0;color:#dcecf3}
+main{max-width:1180px;margin:22px auto;padding:0 16px 40px}.intro{background:#e7f1f5;border-left:4px solid var(--blue);padding:12px 16px;border-radius:7px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.panel{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:0 2px 8px #16344a0a}.panel h2{font-size:18px;margin:0 0 14px;color:var(--navy)}.full{grid-column:1/-1}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:5px;color:#425466}.field input,.field select{width:100%;padding:10px;border:1px solid #cbd5df;border-radius:7px;background:#fff;font-size:15px;color:var(--ink)}.field small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px}.kpi span{display:block;color:var(--muted);font-size:12px}.kpi strong{display:block;color:var(--navy);font-size:22px;margin-top:4px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}.btn{border:0;border-radius:8px;padding:11px 15px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}.btn.secondary{background:#e6eef2;color:var(--navy)}.btn.green{background:var(--teal)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}th:first-child,td:first-child{text-align:left}th{background:#f0f5f7;color:#29465b}tfoot td{font-weight:700;background:#f6f9fa}
+.tablewrap{overflow-x:auto}.note{font-size:12px;color:var(--muted);margin-top:12px}.pill{display:inline-block;padding:3px 8px;border-radius:20px;background:#e6f4f1;color:#08665f;font-size:11px;font-weight:bold}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.full{grid-column:auto}}
+@media print{body{background:#fff}header{padding:18px;color:#000;background:#fff;border-bottom:2px solid #12304a}header p{color:#333}main{max-width:none;margin:0;padding:10px}.actions{display:none}.panel,.kpi{box-shadow:none;break-inside:avoid}.grid{gap:8px}}
+</style>
+</head>
+<body>
+<header><h1>2025–2029 CBA Pay Estimator</h1><p>Kenya Universities Staff Union (KUSU) · Public Universities · Offline calculator</p></header>
+<main>
+<div class="intro"><b>How to use:</b> Enter the basic salary on your June 2025 payslip, then enter the applicable CBA basic salary for each year from the signed salary schedule. The annual rates are editable so the estimate can be checked against the correct grade/notch diagonal.</div>
+<div class="grid">
+<section class="panel"><h2>1. Employee details and starting salary</h2><div class="fields">
+<div class="field"><label>Staff grade</label><select id="grade"></select></div>
+<div class="field"><label>Notch on June 2025 payslip</label><input id="notch" type="number" min="1" max="20" value="1"></div>
+<div class="field"><label>June 2025 basic salary (KES/month)</label><input id="base" type="number" min="0" step="1" value="100000"></div>
+<div class="field"><label>Annual increment month</label><select id="incrementMonth"></select></div>
+<div class="field"><label>New CBA scale effective from</label><select id="effective"><option value="2025-06">June 2025</option><option value="2025-07" selected>July 2025</option><option value="2026-01">January 2026</option></select></div>
+<div class="field"><label>Annual notch increment (KES)</label><input id="increment" type="number" min="0" step="1" value="0"><small>Enter 0 if already reflected in the yearly scale values.</small></div>
+</div></section>
+<section class="panel"><h2>2. CBA salary scale (KES/month)</h2><div class="fields">
+<div class="field"><label>2025/26 basic salary</label><input id="s2526" type="number" min="0" step="1" value="103500"></div>
+<div class="field"><label>2026/27 basic salary</label><input id="s2627" type="number" min="0" step="1" value="107123"></div>
+<div class="field"><label>2027/28 basic salary</label><input id="s2728" type="number" min="0" step="1" value="110872"></div>
+<div class="field"><label>2028/29 basic salary</label><input id="s2829" type="number" min="0" step="1" value="114752"></div>
+</div><p class="note">These are editable working values, not a substitute for selecting the exact salary in the signed grade/notch table. Replace them with the amounts in your applicable diagonal on pages 9–14 of the Return to Work Formula.</p></section>
+<section class="panel"><h2>3. Allowances and deductions</h2><div class="fields">
+<div class="field"><label>House allowance (KES/month)</label><input id="house" type="number" min="0" value="18000"></div>
+<div class="field"><label>Commuter allowance (KES/month)</label><input id="commuter" type="number" min="0" value="12000"></div>
+<div class="field"><label>Pension contribution (% of basic)</label><input id="pension" type="number" min="0" max="100" step=".1" value="7.5"></div>
+<div class="field"><label>Other monthly deductions (KES)</label><input id="other" type="number" min="0" value="0"></div>
+<div class="field"><label>PAYE / tax deduction (KES/month)</label><input id="paye" type="number" min="0" value="0"><small>Enter the PAYE shown on your payslip; tax is not inferred.</small></div>
+<div class="field"><label>NSSF Tiered deduction</label><select id="nssf"><option value="yes">Include employee NSSF (6%, capped)</option><option value="no">Do not include NSSF</option></select></div>
+</div><p class="note">House and commuter allowances are editable. Confirm the applicable allowance category and payroll deductions with your institution.</p></section>
+<section class="panel"><h2>4. Promotion during the CBA period</h2><div class="fields">
+<div class="field"><label>Promotion?</label><select id="promotion"><option value="no">No</option><option value="yes">Yes – one promotion</option></select></div>
+<div class="field"><label>Promotion effective month</label><input id="promMonth" type="month" value="2026-07"></div>
+<div class="field"><label>New grade</label><select id="newGrade"></select></div>
+<div class="field"><label>New monthly basic salary (KES)</label><input id="promSalary" type="number" min="0" value="0"><small>Enter the promoted grade/notch salary for the effective date.</small></div>
+</div></section>
+</div>
+<div class="actions"><button class="btn green" onclick="calculate()">Calculate pay and arrears</button><button class="btn secondary" onclick="window.print()">Print / Save as PDF</button><button class="btn secondary" onclick="downloadCSV()">Download CSV</button><button class="btn secondary" onclick="resetForm()">Reset</button></div>
+<div class="kpis">
+<div class="kpi"><span>December 2026 basic pay</span><strong id="kBasic">KES 0</strong></div>
+<div class="kpi"><span>December 2026 gross pay</span><strong id="kGross">KES 0</strong></div>
+<div class="kpi"><span>Arrears Jul 2025–Jun 2026</span><strong id="kA1">KES 0</strong></div>
+<div class="kpi"><span>Arrears Jul–Nov 2026</span><strong id="kA2">KES 0</strong></div>
+</div>
+<section class="panel full"><h2>5. Salary and allowance schedule</h2><div class="tablewrap"><table id="schedule"><thead><tr><th>Period</th><th>Basic salary</th><th>House</th><th>Commuter</th><th>Gross</th><th>Pension</th><th>NSSF</th><th>PAYE + other</th><th>Estimated net</th></tr></thead><tbody></tbody></table></div><p class="note">Monthly projections are calculated from the values entered above. Arrears are the difference between revised gross pay and the June 2025 baseline gross pay, for the specified months. The calculator does not automatically model every individual payroll adjustment or tax relief.</p></section>
+<section class="panel full"><h2>6. Arrears and cumulative CBA gain</h2><div class="tablewrap"><table id="arrears"><thead><tr><th>Arrears period</th><th>Months</th><th>Gross arrears</th><th>Indicative 2% union dues</th><th>Balance after union dues</th></tr></thead><tbody></tbody></table></div><p class="note">Union dues are shown at 2% as stated in the estimator reference page; confirm the actual deduction basis with KUSU/payroll. Arrears do not include interest or any tax recalculation.</p></section>
+<div class="note">Unofficial planning estimator. Based on the KUSU Return to Work Formula signed 30 October 2026 and the referenced online estimator's scope. The signed salary tables contain grade/notch-specific figures; always verify every entered salary against the official schedule and your payslip before relying on the result.</div>
+</main>
+<script>
+const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const grades=Array.from({length:15},(_,i)=>"Grade "+(15-i));
+for(const id of ["grade","newGrade"]){let el=document.getElementById(id);grades.forEach(g=>{let o=document.createElement("option");o.value=g;o.textContent=g;el.appendChild(o)});el.value="Grade 10"}
+months.forEach((m,i)=>{let o=document.createElement("option");o.value=i+1;o.textContent=m;document.getElementById("incrementMonth").appendChild(o)});document.getElementById("incrementMonth").value="7";
+let rows=[];
+const money=n=>"KES "+Math.round(n||0).toLocaleString("en-KE");
+const val=id=>Number(document.getElementById(id).value)||0;
+function nssf(b){if(document.getElementById("nssf").value!=="yes")return 0;return Math.min(b,108000)*.06}
+function ym(y,m){return y+"-"+String(m).padStart(2,"0")}
+function calculate(){
+ let base=val("base"), yearly=[val("s2526"),val("s2627"),val("s2728"),val("s2829")], house=val("house"),comm=val("commuter"), pensionRate=val("pension")/100,inc=val("increment"), incMonth=val("incrementMonth"), start=document.getElementById("effective").value;
+ let doProm=document.getElementById("promotion").value==="yes", pm=document.getElementById("promMonth").value, ps=val("promSalary");
+ let oldGross=base+house+comm, schedule=[],cum=0,a1=0,a2=0;
+ for(let y=2025;y<=2029;y++)for(let m=1;m<=12;m++){
+   let key=ym(y,m); if(key<"2025-06"||key>"2029-06")continue;
+   let basic=base;
+   if(key>=start){let ix=y-2025;if(y===2025)ix=0;basic=yearly[Math.max(0,Math.min(3,ix))]||base}
+   let yearsAfter=Math.max(0,y-2025); if(m>=incMonth && key>=start)basic+=inc*yearsAfter;
+   if(doProm&&pm&&key>=pm&&ps>0){let py=Number(pm.slice(0,4));let promoInc=Math.max(0,y-py-(m<incMonth?1:0));basic=ps+inc*promoInc;}
+   let gross=basic+house+comm,pen=basic*pensionRate,ns=nssf(basic),net=gross-pen-ns-val("paye")-val("other");
+   schedule.push({period:months[m-1]+" "+y,basic,house,comm,gross,pen,ns,payOther:val("paye")+val("other"),net});
+   if(key>="2025-07"&&key<="2026-06")a1+=Math.max(0,gross-oldGross);
+   if(key>="2026-07"&&key<="2026-11")a2+=Math.max(0,gross-oldGross);
+   if(key>="2025-07")cum+=Math.max(0,gross-oldGross);
+ }
+ rows=schedule;
+ document.querySelector("#schedule tbody").innerHTML=schedule.map(r=>`<tr><td>${r.period}</td><td>${money(r.basic)}</td><td>${money(r.house)}</td><td>${money(r.comm)}</td><td>${money(r.gross)}</td><td>${money(r.pen)}</td><td>${money(r.ns)}</td><td>${money(r.payOther)}</td><td>${money(r.net)}</td></tr>`).join("");
+ let dec=schedule.find(r=>r.period==="December 2026")||schedule.find(r=>r.period==="November 2026")||{basic:0,gross:0};
+ document.getElementById("kBasic").textContent=money(dec.basic);document.getElementById("kGross").textContent=money(dec.gross);document.getElementById("kA1").textContent=money(a1);document.getElementById("kA2").textContent=money(a2);
+ let dues1=a1*.02,dues2=a2*.02;
+ document.querySelector("#arrears tbody").innerHTML=`<tr><td>July 2025 – June 2026</td><td>12</td><td>${money(a1)}</td><td>${money(dues1)}</td><td>${money(a1-dues1)}</td></tr><tr><td>July – November 2026</td><td>5</td><td>${money(a2)}</td><td>${money(dues2)}</td><td>${money(a2-dues2)}</td></tr><tr><td><b>Cumulative CBA gain (Jul 2025–Jun 2029)</b></td><td>48</td><td>${money(cum)}</td><td>${money(cum*.02)}</td><td>${money(cum*.98)}</td></tr>`;
+}
+function downloadCSV(){if(!rows.length)calculate();let header=["Period","Basic salary","House allowance","Commuter allowance","Gross pay","Pension","NSSF","PAYE and other deductions","Estimated net"];let data=[header,...rows.map(r=>[r.period,r.basic,r.house,r.comm,r.gross,r.pen,r.ns,r.payOther,r.net])];let csv=data.map(r=>r.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(",")).join("\r\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="KUSU_CBA_salary_projection.csv";a.click();URL.revokeObjectURL(a.href)}
+function resetForm(){document.querySelectorAll("input").forEach(e=>{if(e.type==="number")e.value=e.defaultValue});document.getElementById("promotion").value="no";calculate()}
+calculate();
+</script>
+</body></html>
